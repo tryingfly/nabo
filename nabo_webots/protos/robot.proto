@@ -1,0 +1,775 @@
+#VRML_SIM R2023b utf8
+# =========== ***doc description @ yyp*** ===========
+# This is part of Nabo (Naughty Boy, 小炮), an open project for the control of biped robot，
+# Copyright (C) 2024 YYP with MIT License.
+# Feel free to use in any purpose, and cite Nabo or 小炮 in any style, to contribut to the advancement of the community.
+# <https://github.com/tryingfly/nabo>
+# <https://www.zhihu.com/column/c_1746480685987373057>
+# =====================================================
+
+PROTO robot[
+  # 设定旋转头朝下验证轨迹
+  field SFVec3f    translation  0 0 0.74
+  field SFRotation rotation     1 0 0 0
+]
+{
+Robot {
+  translation IS translation
+  rotation IS rotation
+  # 如需固定身体，则注释下面physics一行
+  physics Physics {}
+  children [
+    DEF dummy Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+          transparency 0.2
+        }
+      }
+      geometry Box {
+        size 0.02 0.02 0.02
+      }
+    }
+    DEF body Solid {
+      children [
+        DEF body Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 0.3 0.3
+              transparency 0.2
+            }
+          }
+          geometry Box {
+            size 0.2 0.3 0.5
+          }
+        }
+        InertialUnit {
+          name "imu"
+        }
+        Gyro {
+          name "gyr"
+        }
+        Accelerometer {
+          name "accel"
+        }
+        DEF rightHipYaw HingeJoint {
+          jointParameters DEF rightHipYaw HingeJointParameters {
+            axis 0 0 1
+            anchor 0 -0.1 -0.3
+          }
+          device [
+            DEF mt00 RotationalMotor {
+              name "mt00"
+              maxTorque 50
+            }
+            DEF ps00 PositionSensor {
+              name "ps00"
+            }
+          ]
+          endPoint DEF rightHipYaw Solid {
+            translation 0 -0.1 -0.3
+            children [
+              DEF rightHipRol HingeJoint {
+                jointParameters DEF rightHipRol HingeJointParameters {
+                }
+                device [
+                  DEF mt01 RotationalMotor {
+                    name "mt01"
+                    maxTorque 50
+                  }
+                  DEF ps01 PositionSensor {
+                    name "ps01"
+                  }
+                ]
+                endPoint DEF rightHipRol Solid {
+                  rotation 1 0 0 0
+                  children [
+                    DEF rightHipPit HingeJoint {
+                      jointParameters DEF rightHipPit HingeJointParameters {
+                        axis 0 1 0
+                      }
+                      device [
+                        DEF mt02 RotationalMotor {
+                          name "mt02"
+                          maxTorque 50
+                        }
+                        DEF ps02 PositionSensor {
+                          name "ps02"
+                        }
+                      ]
+                      endPoint DEF rightThigh Solid {
+                        translation 0 0 -0.1
+                        rotation 0 1 0 0
+                        children [
+                          DEF rightKnee HingeJoint {
+                            jointParameters DEF rightKnee HingeJointParameters {
+                              axis 0 1 0
+                              anchor 0 0 -0.1
+                            }
+                            device [
+                              DEF mt03 RotationalMotor {
+                                name "mt03"
+                                maxTorque 50
+                              }
+                              DEF ps03 PositionSensor {
+                                name "ps03"
+                              }
+                            ]
+                            endPoint DEF rightShank Solid {
+                              translation 0 0 -0.2
+                              rotation 0 1 0 0
+                              children [
+                                DEF rightAnklePit HingeJoint {
+                                  jointParameters DEF rightAnklePit HingeJointParameters {
+                                    axis 0 1 0
+                                    anchor 0 0 -0.1
+                                  }
+                                  device [
+                                    DEF mt04 RotationalMotor {
+                                      name "mt04"
+                                      maxTorque 50
+                                    }
+                                    DEF ps04 PositionSensor {
+                                      name "ps04"
+                                    }
+                                  ]
+                                  endPoint DEF rightFoot Solid {
+                                    translation 0 0 -0.1
+                                    rotation 0 1 0 0
+                                    children [
+                                      HingeJoint {
+                                        jointParameters DEF rightAnkRol HingeJointParameters {
+                                        }
+                                        device [
+                                          PositionSensor {
+                                            name "ps05"
+                                          }
+                                          RotationalMotor {
+                                            name "mt05"
+                                            maxTorque 50
+                                          }
+                                        ]
+                                        endPoint Solid {
+                                          translation 0 0 -0.02
+                                          rotation 1 0 0 0
+                                          children [
+                                            DEF rightFoot Group {
+                                              children [
+                                                Pose {
+                                                  translation 0.08 0.03 -0.01
+                                                  children [
+                                                    Shape {
+                                                      appearance Appearance {
+                                                        material Material {
+                                                          diffuseColor 1 0.5 1
+                                                          transparency 0.9
+                                                        }
+                                                      }
+                                                      geometry Sphere {
+                                                        radius 0.01
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Pose {
+                                                  translation 0.08 -0.03 -0.01
+                                                  children [
+                                                    Shape {
+                                                      appearance Appearance {
+                                                        material Material {
+                                                          diffuseColor 1 0.5 1
+                                                          transparency 0.9
+                                                        }
+                                                      }
+                                                      geometry Sphere {
+                                                        radius 0.01
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Pose {
+                                                  translation -0.08 0.03 -0.01
+                                                  children [
+                                                    Shape {
+                                                      appearance Appearance {
+                                                        material Material {
+                                                          diffuseColor 1 0.5 1
+                                                          transparency 0.9
+                                                        }
+                                                      }
+                                                      geometry Sphere {
+                                                        radius 0.01
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Pose {
+                                                  translation -0.08 -0.03 -0.01
+                                                  children [
+                                                    Shape {
+                                                      appearance Appearance {
+                                                        material Material {
+                                                          diffuseColor 1 0.5 1
+                                                          transparency 0.9
+                                                        }
+                                                      }
+                                                      geometry Sphere {
+                                                        radius 0.01
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                            DEF rightFootBox Shape {
+                                              appearance Appearance {
+                                                material Material {
+                                                  diffuseColor 1 0.4 1
+                                                  transparency 0.2
+                                                }
+                                              }
+                                              geometry Box {
+                                                size 0.16 0.06 0.02
+                                              }
+                                            }
+                                          ]
+                                          boundingObject USE rightFoot
+                                          physics Physics {
+                                            density -1
+                                            mass 0.5
+                                            centerOfMass [
+                                              0 0 0
+                                            ]
+                                            inertiaMatrix [
+                                              0.00052 0.00327 0.00367
+                                              0 0 0
+                                            ]
+                                          }
+                                        }
+                                      }
+                                      Shape {
+                                        appearance Appearance {
+                                          material Material {
+                                            diffuseColor 0.7 1 0.7
+                                            transparency 0.2
+                                          }
+                                        }
+                                        geometry DEF rightAnkle Sphere {
+                                          radius 0.01
+                                        }
+                                      }
+                                    ]
+                                    boundingObject USE rightAnkle
+                                    physics Physics {
+                                      density -1
+                                      mass 0.0041887902047863905
+                                      centerOfMass [
+                                        0 0 0
+                                      ]
+                                      inertiaMatrix [
+                                        1.6755160819145562e-07 1.6755160819145562e-07 1.6755160819145562e-07
+                                        0 0 0
+                                      ]
+                                    }
+                                  }
+                                }
+                                DEF rightShank Shape {
+                                  appearance Appearance {
+                                    material Material {
+                                      transparency 0.2
+                                    }
+                                  }
+                                  geometry Capsule {
+                                    height 0.12
+                                    radius 0.015
+                                  }
+                                }
+                              ]
+                              boundingObject USE rightShank
+                              physics Physics {
+                                density -1
+                                mass 1
+                                centerOfMass [
+                                  0 0 0
+                                ]
+                                inertiaMatrix [
+                                  0.0004541666666666667 0.0004541666666666667 7.5e-05
+                                  0 0 0
+                                ]
+                              }
+                            }
+                          }
+                          DEF rightThigh Shape {
+                            appearance Appearance {
+                              material Material {
+                                diffuseColor 0.5 1 0.5
+                                transparency 0.2
+                              }
+                            }
+                            geometry Capsule {
+                              height 0.14
+                              radius 0.02
+                            }
+                          }
+                        ]
+                        boundingObject USE rightThigh
+                        physics Physics {
+                          density -1
+                          mass 1
+                          centerOfMass [
+                            0 0 0
+                          ]
+                          inertiaMatrix [
+                            0.0011333333333333336 0.0011333333333333336 0.00013333333333333337
+                            0 0 0
+                          ]
+                        }
+                      }
+                    }
+                    Pose {
+                      translation -0.05 0 0
+                      rotation 0 1 0 1.5708
+                      children [
+                        DEF rightHipRol Shape {
+                          appearance Appearance {
+                            material Material {
+                              diffuseColor 1 1 0.5
+                              transparency 0.2
+                            }
+                          }
+                          geometry Cylinder {
+                            height 0.02
+                            radius 0.03
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                  boundingObject Pose {
+                    translation -0.05 0 0
+                    rotation 0 1 0 1.5708
+                    children [
+                      USE rightHipRol
+                    ]
+                  }
+                  physics Physics {
+                    density -1
+                    mass 0.5
+                    centerOfMass [
+                      -0.05 0 0
+                    ]
+                    inertiaMatrix [
+                      0.00022499999999870692 0.0013791666666666668 0.0013791666666679598
+                      0 -3.52015489053719e-10 0
+                    ]
+                  }
+                }
+              }
+              Pose {
+                translation 0 0 0.04
+                children [
+                  DEF rightHipYaw Shape {
+                    appearance Appearance {
+                      material Material {
+                        diffuseColor 1 0.5 0.5
+                        transparency 0.2
+                      }
+                    }
+                    geometry Cylinder {
+                      height 0.02
+                      radius 0.03
+                    }
+                  }
+                ]
+              }
+            ]
+            name "rightHipYaw"
+            boundingObject Pose {
+              translation 0 0 0.04
+              children [
+                USE rightHipYaw
+              ]
+            }
+            physics Physics {
+              density -1
+              mass 0.5
+              centerOfMass [
+                0 0 0.039999999999999994
+              ]
+              inertiaMatrix [
+                0.0009291666666666667 0.0009291666666666667 0.000225
+                0 0 0
+              ]
+            }
+          }
+        }
+        DEF leftHipYaw HingeJoint {
+          jointParameters DEF leftHipYaw HingeJointParameters {
+            axis 0 0 1
+            anchor 0 0.1 -0.3
+          }
+          device [
+            DEF mt10 RotationalMotor {
+              name "mt10"
+              maxTorque 50
+            }
+            DEF ps10 PositionSensor {
+              name "ps10"
+            }
+          ]
+          endPoint DEF leftHipYaw Solid {
+            translation 0 0.1 -0.3
+            children [
+              DEF leftHipRol HingeJoint {
+                jointParameters DEF leftHipRol HingeJointParameters {
+                }
+                device [
+                  DEF mt11 RotationalMotor {
+                    name "mt11"
+                    maxTorque 50
+                  }
+                  DEF ps11 PositionSensor {
+                    name "ps11"
+                  }
+                ]
+                endPoint DEF leftHipRol Solid {
+                  rotation 1 0 0 0
+                  children [
+                    DEF leftHipPit HingeJoint {
+                      jointParameters DEF leftHipPit HingeJointParameters {
+                        axis 0 1 0
+                      }
+                      device [
+                        DEF mt12 RotationalMotor {
+                          name "mt12"
+                          maxTorque 50
+                        }
+                        DEF ps12 PositionSensor {
+                          name "ps12"
+                        }
+                      ]
+                      endPoint DEF leftThigh Solid {
+                        translation 0 0 -0.1
+                        rotation 0 1 0 0
+                        children [
+                          DEF leftKnee HingeJoint {
+                            jointParameters DEF leftKnee HingeJointParameters {
+                              axis 0 1 0
+                              anchor 0 0 -0.1
+                            }
+                            device [
+                              DEF mt13 RotationalMotor {
+                                name "mt13"
+                                maxTorque 50
+                              }
+                              DEF ps13 PositionSensor {
+                                name "ps13"
+                              }
+                            ]
+                            endPoint DEF leftShank Solid {
+                              translation 0 0 -0.2
+                              rotation 0 1 0 0
+                              children [
+                                DEF leftAnklePit HingeJoint {
+                                  jointParameters DEF leftAnklePit HingeJointParameters {
+                                    axis 0 1 0
+                                    anchor 0 0 -0.1
+                                  }
+                                  device [
+                                    DEF mt14 RotationalMotor {
+                                      name "mt14"
+                                      maxTorque 50
+                                    }
+                                    DEF ps14 PositionSensor {
+                                      name "ps14"
+                                    }
+                                  ]
+                                  endPoint DEF leftFoot Solid {
+                                    translation 0 0 -0.1
+                                    rotation 0 1 0 0
+                                    children [
+                                      HingeJoint {
+                                        jointParameters DEF leftAnkRol HingeJointParameters {
+                                        }
+                                        device [
+                                          PositionSensor {
+                                            name "ps15"
+                                          }
+                                          RotationalMotor {
+                                            name "mt15"
+                                            maxTorque 50
+                                          }
+                                        ]
+                                        endPoint Solid {
+                                          translation 0 0 -0.02
+                                          rotation 1 0 0 0
+                                          children [
+                                            DEF leftFoot Group {
+                                              children [
+                                                Pose {
+                                                  translation 0.08 0.03 -0.01
+                                                  children [
+                                                    Shape {
+                                                      appearance Appearance {
+                                                        material Material {
+                                                          diffuseColor 1 0.5 1
+                                                          transparency 0.9
+                                                        }
+                                                      }
+                                                      geometry Sphere {
+                                                        radius 0.01
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Pose {
+                                                  translation 0.08 -0.03 -0.01
+                                                  children [
+                                                    Shape {
+                                                      appearance Appearance {
+                                                        material Material {
+                                                          diffuseColor 1 0.5 1
+                                                          transparency 0.9
+                                                        }
+                                                      }
+                                                      geometry Sphere {
+                                                        radius 0.01
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Pose {
+                                                  translation -0.08 0.03 -0.01
+                                                  children [
+                                                    Shape {
+                                                      appearance Appearance {
+                                                        material Material {
+                                                          diffuseColor 1 0.5 1
+                                                          transparency 0.9
+                                                        }
+                                                      }
+                                                      geometry Sphere {
+                                                        radius 0.01
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                                Pose {
+                                                  translation -0.08 -0.03 -0.01
+                                                  children [
+                                                    Shape {
+                                                      appearance Appearance {
+                                                        material Material {
+                                                          diffuseColor 1 0.5 1
+                                                          transparency 0.9
+                                                        }
+                                                      }
+                                                      geometry Sphere {
+                                                        radius 0.01
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                            DEF leftFootBox Shape {
+                                              appearance Appearance {
+                                                material Material {
+                                                  diffuseColor 1 0.4 1
+                                                  transparency 0.2
+                                                }
+                                              }
+                                              geometry Box {
+                                                size 0.16 0.06 0.02
+                                              }
+                                            }
+                                          ]
+                                          boundingObject USE leftFoot
+                                          physics Physics {
+                                            density -1
+                                            mass 0.5
+                                            centerOfMass [
+                                              0 0 0
+                                            ]
+                                            inertiaMatrix [
+                                              0.00052 0.00327 0.00367
+                                              0 0 0
+                                            ]
+                                          }
+                                        }
+                                      }
+                                      Shape {
+                                        appearance Appearance {
+                                          material Material {
+                                            diffuseColor 0.7 1 0.7
+                                            transparency 0.2
+                                          }
+                                        }
+                                        geometry DEF leftAnkle Sphere {
+                                          radius 0.01
+                                        }
+                                      }
+                                    ]
+                                    boundingObject USE leftAnkle
+                                    physics Physics {
+                                      density -1
+                                      mass 0.0041887902047863905
+                                      centerOfMass [
+                                        0 0 0
+                                      ]
+                                      inertiaMatrix [
+                                        1.6755160819145562e-07 1.6755160819145562e-07 1.6755160819145562e-07
+                                        0 0 0
+                                      ]
+                                    }
+                                  }
+                                }
+                                DEF leftShank Shape {
+                                  appearance Appearance {
+                                    material Material {
+                                      transparency 0.2
+                                    }
+                                  }
+                                  geometry Capsule {
+                                    height 0.12
+                                    radius 0.015
+                                  }
+                                }
+                              ]
+                              boundingObject USE leftShank
+                              physics Physics {
+                                density -1
+                                mass 1
+                                centerOfMass [
+                                  0 0 0
+                                ]
+                                inertiaMatrix [
+                                  0.0004541666666666667 0.0004541666666666667 7.5e-05
+                                  0 0 0
+                                ]
+                              }
+                            }
+                          }
+                          DEF leftThigh Shape {
+                            appearance Appearance {
+                              material Material {
+                                diffuseColor 0.5 1 0.5
+                                transparency 0.2
+                              }
+                            }
+                            geometry Capsule {
+                              height 0.14
+                              radius 0.02
+                            }
+                          }
+                        ]
+                        boundingObject USE leftThigh
+                        physics Physics {
+                          density -1
+                          mass 1
+                          centerOfMass [
+                            0 0 0
+                          ]
+                          inertiaMatrix [
+                            0.0005096919921184081 0.0005096919921184081 4.0547489182332266e-05
+                            0 0 0
+                          ]
+                        }
+                      }
+                    }
+                    Pose {
+                      translation -0.05 0 0
+                      rotation 0 1 0 1.5708
+                      children [
+                        DEF leftHipRol Shape {
+                          appearance Appearance {
+                            material Material {
+                              diffuseColor 1 1 0.5
+                              transparency 0.2
+                            }
+                          }
+                          geometry Cylinder {
+                            height 0.02
+                            radius 0.03
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                  boundingObject Pose {
+                    translation -0.05 0 0
+                    rotation 0 1 0 1.5708
+                    children [
+                      USE leftHipRol
+                    ]
+                  }
+                  physics Physics {
+                    density -1
+                    mass 0.5
+                    centerOfMass [
+                      -0.05 0 0
+                    ]
+                    inertiaMatrix [
+                      0.00022499999999870692 0.0013791666666666668 0.0013791666666679598
+                      0 -3.52015489053719e-10 0
+                    ]
+                  }
+                }
+              }
+              Pose {
+                translation 0 0 0.04
+                children [
+                  DEF leftHipYaw Shape {
+                    appearance Appearance {
+                      material Material {
+                        diffuseColor 1 0.5 0.5
+                        transparency 0.2
+                      }
+                    }
+                    geometry Cylinder {
+                      height 0.02
+                      radius 0.03
+                    }
+                  }
+                ]
+              }
+            ]
+            boundingObject Pose {
+              translation 0 0 0.04
+              children [
+                USE leftHipYaw
+              ]
+            }
+            physics Physics {
+              density -1
+              mass 0.5
+              centerOfMass [
+                0 0 0.039999999999999994
+              ]
+              inertiaMatrix [
+                0.0009291666666666667 0.0009291666666666667 0.000225
+                0 0 0
+              ]
+            }
+          }
+        }
+      ]
+      boundingObject USE body
+      physics Physics {
+        density -1
+        mass 10
+        centerOfMass [
+          0 0 0
+        ]
+        inertiaMatrix [
+          0.28333333333333327 0.2416666666666667 0.10833333333333334
+          0 0 0
+        ]
+      }
+    }
+  ]
+  boundingObject USE dummy
+  controller "my_controller"
+  supervisor TRUE
+}
+}

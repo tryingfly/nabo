@@ -1,0 +1,35 @@
+#VRML_SIM R2023b utf8
+# =========== ***doc description @ yyp*** ===========
+# This is part of Nabo (Naughty Boy, 小炮), an open project for the control of biped robot，
+# Copyright (C) 2024 YYP with MIT License.
+# Feel free to use in any purpose, and cite Nabo or 小炮 in any style, to contribut to the advancement of the community.
+# <https://github.com/tryingfly/nabo>
+# <https://www.zhihu.com/column/c_1746480685987373057>
+# =====================================================
+
+#EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+#EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+#EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "../protos/TexturedBackground.proto"
+EXTERNPROTO "../protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "../protos/RectangleArena.proto"
+EXTERNPROTO "../protos/robot.proto"
+
+WorldInfo {
+  ERP 0.5
+  basicTimeStep 1
+}
+Viewpoint {
+  orientation -0.09424575253096261 0.20692570170804075 0.9738067016110064 0.8850200849092832
+  position -1.6853547092584356 -1.8542657612446292 0.6659309459831296
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  rotation 0 1 0 0
+  floorSize 10 2
+}
+DEF robot robot {
+}
