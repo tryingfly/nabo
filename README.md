@@ -20,6 +20,7 @@ Nabo is not fully developed, now it only can walk in simulation (Feb. 2024).
 ![运行截图](image/运行截图.png)
 
 # usage
+<https://www.zhihu.com/column/c_1746480685987373057>
 
 # thanks for
 Eigen, RBDL, eiquadprog, Mujoco, Webots, Coppeliasim, and MIT mini cheetah.
