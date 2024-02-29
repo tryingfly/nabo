@@ -1,0 +1,115 @@
+<!-- ========= ***doc description @ yyp*** ==========
+This is part of Nabo (Naughty Boy, 小炮), an open project for the control of biped robot，
+Copyright (C) 2024 YYP with MIT License.
+Feel free to use in any purpose, and cite Nabo or 小炮 in any style, to contribut to the advancement of the community.
+
+单腿6 dof
+默认角度单位为360角度
+===================================================== -->
+
+<mujoco model="biped">
+	<option timestep="0.001"/>
+	<asset>
+		<texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+		<material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2"/>
+	</asset>
+
+	<default>
+		<!-- 实测这个限制是软的，有点像kp系数在限制驱动 -->
+		<joint damping=".03" frictionloss="0.2" range="-45 45"/>
+		<motor ctrlrange="-50 50" ctrllimited="true"/>
+
+		<default class="footContact">
+			<geom type="sphere" mass="0.1" size="0.01" rgba="1 0.5 1 0.1" friction="1 1 1"/>
+		</default>
+	</default>
+
+	<worldbody>
+		<geom size="5 3 .05" type="plane" material="grid" friction="1 1 1"/>
+		<light mode="trackcom" pos="0 0 3"/>
+		<light mode="targetbodycom" target="rbt" diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 -6 4" cutoff="30"/>
+		<body name="rbt" pos="0 0 0.74" euler="0 0 0">
+			<!-- 悬空吊起需注释下面一行 -->
+			<freejoint/>
+			<!-- geom的size是half定义的 -->
+			<geom name="body0" type="box" mass="10" size="0.1 0.15 0.25" rgba="1 0.3 0.3 0.5"/>
+			<!-- <geom name="body1" type="box" pos="0.5 0 0" size="0.1 0.1 0.1" mass="2" rgba="1 0.4 0.4 0.5"/> -->
+			<!--右腿-->
+			<body pos="0 -0.1 -0.3">
+				<!-- <site name="rightHip" size="0.02" rgba="1 1 0.5 1"/> -->
+				<joint name="rightHipYaw" axis="0 0 1"/>
+				<geom type="cylinder" mass="0.5" size="0.02 0.01 0.1" pos="0 0 0.03" rgba="1 0.5 0.2 0.5"/>
+				<body>
+					<joint name="rightHipRol" axis="1 0 0"/>
+					<geom type="cylinder" mass="0.5" size="0.02 0.01 0.1" euler="0 90 0" pos="-0.04 0 0" rgba="1 1 0.4 0.5"/>
+					<body>
+						<joint name="rightHipPit" axis="0 1 0" range="-60 0"/>
+						<geom type="capsule" mass="1" size="0.02" fromto="0 0 -0.03 0 0 -0.17" rgba="0.5 1 0.5 0.5"/>
+						<body pos="0 0 -0.2">
+							<joint name="rightKnee" axis="0 1 0" range="0 160"/>
+							<geom type="capsule" mass="1" size="0.015" fromto="0 0 -0.04 0 0 -0.16" rgba="0.5 1 1 0.5"/>
+							<body pos="0 0 -0.2">
+								<joint name="rightAnklePit" axis="0 1 0" range="-60 0"/>
+								<joint name="rightAnkleRol" axis="1 0 0"/>
+								<site name="rightAnkle" size="0.01" rgba="0.5 0.5 1 1"/>
+								<!-- <geom name="rightFoot" type="box" pos="0 0 -0.03" size="0.08 0.03 0.01" mass="0.4" rgba="1 0.5 1 0.5"/> -->
+								<!-- 假foot，四角球接触 -->
+								<site name="rightFoot-" type="box" pos="0 0 -0.02" size="0.08 0.03 0.01" rgba="1 0.5 1 0.5"/>
+								<geom class="footContact" pos=" 0.08  0.03 -0.03"/>
+								<geom class="footContact" pos=" 0.08 -0.03 -0.03"/>
+								<geom class="footContact" pos="-0.08 -0.03 -0.03"/>
+								<geom class="footContact" pos="-0.08  0.03 -0.03"/>
+							</body>
+						</body>
+					</body>
+				</body>
+			</body>
+			<!--左腿-->
+			<body pos="0 0.1 -0.3">
+				<!-- <site name="leftHip" size="0.02" rgba="1 1 0.5 1"/> -->
+				<joint name="leftHipYaw" axis="0 0 1"/>
+				<geom type="cylinder" mass="0.5" size="0.02 0.01 0.1" pos="0 0 0.03" rgba="1 0.5 0.2 0.5"/>
+				<body>
+					<joint name="leftHipRol" axis="1 0 0"/>
+					<geom type="cylinder" mass="0.5" size="0.02 0.01 0.1" euler="0 90 0" pos="-0.04 0 0" rgba="1 1 0.4 0.5"/>
+					<body>
+						<joint name="leftHipPit" axis="0 1 0" range="-60 0"/>
+						<geom type="capsule" mass="1" size="0.02" fromto="0 0 -0.03 0 0 -0.17" rgba="0.5 1 0.5 0.5"/>
+						<body pos="0 0 -0.2">
+							<joint name="leftKnee" axis="0 1 0" range="0 160"/>
+							<geom type="capsule" mass="1" size="0.015" fromto="0 0 -0.04 0 0 -0.16" rgba="0.5 1 1 0.5"/>
+							<body pos="0 0 -0.2">
+								<joint name="leftAnklePit" axis="0 1 0" range="-60 0"/>
+								<joint name="leftAnkleRol" axis="1 0 0"/>
+								<site name="leftAnkle" size="0.01" rgba="0.5 0.5 1 1"/>
+								<!-- <geom name="leftFoot" type="box" pos="0 0 -0.03" size="0.08 0.03 0.01" mass="1" rgba="1 0.5 1 0.5"/> -->
+								<!-- 假foot，四角球接触 -->
+								<site name="leftFoot-" type="box" pos="0 0 -0.02" size="0.08 0.03 0.01" rgba="1 0.5 1 0.5"/>
+								<geom class="footContact" pos=" 0.08  0.03 -0.03"/>
+								<geom class="footContact" pos=" 0.08 -0.03 -0.03"/>
+								<geom class="footContact" pos="-0.08 -0.03 -0.03"/>
+								<geom class="footContact" pos="-0.08  0.03 -0.03"/>
+							</body>
+						</body>
+					</body>
+				</body>
+			</body>
+		</body>
+	</worldbody>
+
+	<actuator>
+		<motor name="mt00" joint="rightHipYaw"/>
+		<motor name="mt01" joint="rightHipRol"/>
+		<motor name="mt02" joint="rightHipPit"/>
+		<motor name="mt03" joint="rightKnee"/>
+		<motor name="mt04" joint="rightAnklePit"/>
+		<motor name="mt05" joint="rightAnkleRol"/>
+
+		<motor name="mt10" joint="leftHipYaw"/>
+		<motor name="mt11" joint="leftHipRol"/>
+		<motor name="mt12" joint="leftHipPit"/>
+		<motor name="mt13" joint="leftKnee"/>
+		<motor name="mt14" joint="leftAnklePit"/>
+		<motor name="mt15" joint="leftAnkleRol"/>
+	</actuator>
+</mujoco>
