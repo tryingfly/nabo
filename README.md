@@ -8,7 +8,7 @@ Nabo uses a traditional centroid MPC algorithm with pure c++, it has TWO advanta
 
 Nabo is developed in c++, it has the features of **Crossing OS, Crossing Platform, Self-Dependent, and Easy for Deployment**. It can run on Windows or Linux with Mujoco, Webots, Coppelia, Gazebo, or even real robot. The structure of nabo is shown below. The blocks in gray are not accomplished.
 
-![项目结构](image/项目结构-english.png)
+![项目结构](https://github.com/tryingfly/nabo/tree/main/image/项目结构-english.png)
 
 **2. Easy to read and develop**
 
@@ -17,7 +17,7 @@ The MIT Cheetah is an impressive program, but it is not friendly for rookies to 
 Nabo is not fully developed, now it only can walk in simulation (Feb. 2024).
 # snapshots
 
-![运行截图](image/运行截图.png)
+![运行截图](https://github.com/tryingfly/nabo/tree/main/image/运行截图.png)
 
 # usage
 
