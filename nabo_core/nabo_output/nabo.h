@@ -1,6 +1,6 @@
 /*=========== ***doc description @ yyp*** ===========
-This is part of Nabo (Naughty Boy, 小炮), an open project for the 
-control of biped robot，Copyright (C) 2024 YYP with MIT License.
+This is part of Nabo (Naughty Boy, 小炮), an open project for the
+control of biped robot，Copyright (C) 2024 YYP, Shanghai Jiao Tong University, under MIT License.
 <https://github.com/tryingfly/nabo>
 <https://www.zhihu.com/column/c_1746480685987373057>
 

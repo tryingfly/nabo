@@ -2,6 +2,8 @@
 
 Nabo, whose Chinese name (小炮) means a Naughty Boy, which is after the movie 《老炮儿》(Mr. Six) directed by Guan Hu, respecting to the fearless temperament of the advancing times.
 
+Nabo is developed by YYP, Shanghai Jiao Tong University, under MIT License. Feel free to use in any purpose, and cite Nabo or 小炮 in any style, to contribut to the advancement of the community.
+
 Nabo uses a traditional centroid MPC algorithm with pure c++, it has TWO advantages:
 
 **1. Easy to deploy**
@@ -15,12 +17,15 @@ Nabo is developed in c++, it has the features of **Crossing OS, Crossing Platfor
 The MIT Cheetah is an impressive program, but it is not friendly for rookies to start. Nabo uses **No Fly Pointers, Good Modulation, Low Nesting Layers, and Lite Release**, making it readable for humans and effective for methines.
 
 Nabo is not fully developed, now it only can walk in simulation (Feb. 2024).
+
 # snapshots
 
 ![运行截图](image/运行截图.png)
 
 # usage
-<https://www.zhihu.com/column/c_1746480685987373057>
+
+[https://www.zhihu.com/column/c_1746480685987373057](https://www.zhihu.com/column/c_1746480685987373057)
 
 # thanks for
+
 Eigen, RBDL, eiquadprog, Mujoco, Webots, Coppeliasim, and MIT mini cheetah.
