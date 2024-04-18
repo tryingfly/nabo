@@ -9,7 +9,15 @@ Feel free to use in any purpose, and cite Nabo or 小炮 in any style, to contri
 
 cmake_minimum_required(VERSION 3.0)
 project(test)
+
+if(DEBUG) 
+# if we add the "-DDEBUG" parameter to cmake command, we sepicfy the build type as Debug and turnoff optimizer.
+set(CMAKE_BUILD_TYPE "Debug")
+add_compile_options(-Wall -O0 -fno-inline)
+else()
 set(CMAKE_BUILD_TYPE "Release")
+endif()
+
 if(MSVC)
 	# add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 	add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
