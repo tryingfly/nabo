@@ -1,0 +1,8 @@
+.vscode
+*/.vscode/
+nabo_core/nabo_output/*
+
+nabo_core/build
+nabo_mujoco/build
+nabo_coppelia/build
+nabo_webbots/build
